@@ -925,11 +925,11 @@ let _ =
 let modes = `Byte :: (if conf.ocamlopt = "" then [] else [`Opt])
 let _ = !print "\n### checking required tools and libraries ###\n"
 let () =
-  if check_ocamlfind_package conf ~fail: false "lablgtk2" &&
-    check_ocamlfind_package conf ~fail: false "lablgtk2.gnomecanvas"
+  if check_ocamlfind_package conf ~fail: false "lablgtk3" &&
+    check_ocamlfind_package conf ~fail: false "lablgtk3-goocanvas2"
   then
     begin
-      add_subst "GTK_PACKAGES" "lablgtk2.gnomecanvas";
+      add_subst "GTK_PACKAGES" "lablgtk3-goocanvas2";
       add_subst "LIB_GTK" "odot_gtk.cmx";
       add_subst "LIB_GTK_BYTE" "odot_gtk.cmo"
     end

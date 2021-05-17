@@ -29,7 +29,7 @@ let default_dot_ppi = 72.0
 
 let p_dbg s = ()
 
-(* let p_dbg = prerr_endline *)
+(*let p_dbg = prerr_endline*)
 
 
 type dot_program = Dot | Fdp | Neato | Twopi | Circo
@@ -115,34 +115,30 @@ let analyse_annot_dot_file f =
                 let w =
                   match Odot.attr_value (Odot.Simple_id "width") attr_list with
                   | Some (Odot.Simple_id v)
-                  | Some (Odot.Double_quoted_id v) ->
-                      (try float_of_string v
-                       with _ -> raise Not_found)
+                  | Some (Odot.Double_quoted_id v) -> float_of_string v
                   | _ -> raise Not_found
                 in
+                p_dbg (Printf.sprintf "width=%.2f" w);
                 let h =
                   match Odot.attr_value (Odot.Simple_id "height") attr_list with
                   | Some (Odot.Simple_id v)
-                  | Some (Odot.Double_quoted_id v) ->
-                      (try float_of_string v
-                       with _ -> raise Not_found)
+                  | Some (Odot.Double_quoted_id v) -> float_of_string v
                   | _ -> raise Not_found
                 in
+                p_dbg (Printf.sprintf "height=%.2f" w);
                 let (x,y) =
                   match Odot.attr_value (Odot.Simple_id "pos") attr_list with
                   | Some (Odot.Simple_id v)
                   | Some (Odot.Double_quoted_id v) ->
                       begin
                         match split_string v [','] with
-                          [x;y] ->
-                            (
-                             try (int_of_string x, int_of_string y)
-                             with | _ -> raise Not_found
-                            )
+                          [x;y] -> (float_of_string x, float_of_string y)
                         | _ -> raise Not_found
                       end
                   | _ -> raise Not_found
                 in
+                let x = truncate x and y = truncate y in
+                p_dbg (Printf.sprintf "x=%d, y=%d" x y);
                 let w = w *. default_dot_ppi in
                 let h = h *. default_dot_ppi in
                 let x1 = (float x) -. w /. 2.0 in
@@ -156,6 +152,8 @@ let analyse_annot_dot_file f =
               with
                 Not_found ->
                   iter acc q
+              | e ->
+                  p_dbg (Printexc.to_string e); iter acc q
             end
         | Odot.Stmt_subgraph g ->
             iter acc (g.Odot.sub_stmt_list @ q)
@@ -180,14 +178,12 @@ class virtual box ?(dot_program=Dot) ~tmp_hash () =
   let zooms =
     [ 10 ; 20 ; 30 ; 40 ; 50 ; 60 ; 70 ; 80 ; 90 ; 100 ; 120 ]
   in
-  let wcombo = GEdit.combo
-    ~popdown_strings: (List.map (fun s -> Printf.sprintf "%d%%" s) zooms)
-      ~allow_empty:false
-      ~enable_arrow_keys:true
-      ~value_in_list:true
-      ~packing: (hbox#pack ~expand: false)
-      ()
+  let (wcombo, (store,column)) = GEdit.combo_box_text
+    ~strings: (List.map (fun s -> Printf.sprintf "%d%%" s) zooms)
+    ~active:9 ()
   in
+  let () = wcombo#misc#set_tooltip_text "Zoom" in
+  let () = hbox#pack ~expand: false wcombo#coerce in
   let wb_refresh = GButton.button ~label: "Refresh"
     ~packing: (hbox#pack ~expand: false ~padding: 4) ()
   in
@@ -218,8 +214,12 @@ class virtual box ?(dot_program=Dot) ~tmp_hash () =
 
     method zoom () =
       let z =
-        try Scanf.sscanf wcombo#entry#text "%d%%" (fun a -> Some a)
-        with _ -> None
+        match wcombo#active_iter with
+        | None -> None
+        | Some row ->
+            let s = wcombo#model#get ~row ~column in
+            try Scanf.sscanf s "%d%%" (fun a -> Some a)
+            with _ -> None
       in
       match z with
         None -> ()
@@ -318,20 +318,21 @@ class virtual box ?(dot_program=Dot) ~tmp_hash () =
       self#on_button1_press ~x ~y id_opt
 
     method on_button3_press x y =
-      let entries = List.map
+      ()
+      (*let entries = List.map
         (fun z ->
            let t = Printf.sprintf "%d%%" z in
            `I (t, fun () -> wcombo#entry#set_text t)
         )
           zooms
       in
-      GToolbox.popup_menu ~entries ~button: 3 ~time: Int32.zero
+      GToolbox.popup_menu ~entries ~button: 3 ~time: Int32.zero*)
 
     initializer
       ignore (vbox#connect#destroy (fun () -> self#clean_files));
-      wcombo#entry#set_editable false;
-      wcombo#entry#set_text "100%";
-      ignore (wcombo#entry#connect#changed self#zoom );
+      (*wcombo#entry#set_editable false;*)
+      (*wcombo#entry#set_text "100%";*)
+      ignore(wcombo#connect#changed self#zoom);
       ignore (wb_refresh#connect#clicked self#refresh);
       ignore
         (evt_box#event#connect#button_press ~callback:

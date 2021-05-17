@@ -26,7 +26,7 @@ include master.Makefile
 PACKAGES=unix,$(GTK_PACKAGES)
 OF_FLAGS=-package $(PACKAGES)
 
-COMPFLAGS=
+COMPFLAGS=-thread
 LINKFLAGS=
 
 LIB=odot.cmxa
