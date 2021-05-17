@@ -1,4 +1,5 @@
 ocamldoc
+public/refdoc
 META
 autom4te.cache
 .chamo*

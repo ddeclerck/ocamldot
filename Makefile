@@ -140,9 +140,8 @@ uninstall: dummy
 # Web
 ###########
 webdoc: doc
-	mkdir -p ../ocamldot-gh-pages/refdoc
-	cp ocamldoc/* ../ocamldot-gh-pages/refdoc/
-	cp web/index.html web/style.css ../ocamldot-gh-pages/
+	mkdir -p public/refdoc
+	cp ocamldoc/* public/refdoc/
 
 ##########
 # Release
