@@ -2,10 +2,8 @@
 
 
 *** What you need ***
-- OCaml 3.09 or more installed
-- lablgtk2 installed with findlib, with gnomecanvas enabled
-  (Findlib package lablgtk2.gnomecanvas)
-    http://gtk-extras.forge.ocamlcore.org/
+- OCaml 4.12 or more installed
+- lablgtk3 installed with findlib
 - make ;-)
 
 - dot version 2.2.1 or above to use the rendering
