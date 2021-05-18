@@ -1,0 +1,5 @@
+Release 1.1:
+- upgrade to ocaml 4.12.0 and lablgtk3
+- Odot_gtk: add Sfdp, Patchwork and Osage constructors to dot_program type
+- Odot_gtk: use float instead of int for coordinates
+- Odoc_gtk: fix in parsing of annotated dot files

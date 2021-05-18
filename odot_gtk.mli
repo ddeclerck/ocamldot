@@ -26,7 +26,7 @@
 (** Displaying dot graphs in Lablgtk2. *)
 
 (** To choose between the dot program to use to create images. *)
-type dot_program = Dot | Fdp | Neato | Twopi | Circo
+type dot_program = Dot | Fdp | Neato | Twopi | Circo | Sfdp | Patchwork | Osage
 
 
 (** @param dot_program is [Dot] by default
@@ -37,14 +37,14 @@ class virtual box :
       tmp_hash: string -> unit ->
 	object
 	  val mutable current_zoom : float
-	  val mutable dot_height : int
-	  val mutable dot_width : int
+	  val mutable dot_height : float
+	  val mutable dot_width : float
 	  val mutable ids : (float * float * float * float * string) list
 	  method box : GPack.box
 	  method virtual build_graph : Odot.graph
 	  method clean_files : unit
-	  method virtual on_button1_press : x: int -> y: int -> string option -> unit
-	  method on_button3_press : int -> int -> unit
+	  method virtual on_button1_press : x: float -> y: float -> string option -> unit
+	  method on_button3_press : float -> float -> unit
 	  method refresh : unit -> unit
 	  method virtual refresh_data : unit
 	  method update_info : unit

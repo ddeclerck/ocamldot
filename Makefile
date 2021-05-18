@@ -27,7 +27,6 @@ PACKAGES=unix,$(GTK_PACKAGES)
 OF_FLAGS=-package $(PACKAGES)
 
 COMPFLAGS=-thread
-LINKFLAGS=
 
 LIB=odot.cmxa
 LIB_A=$(LIB:.cmxa=.a)
@@ -59,7 +58,7 @@ gtk_byte: $(LIB_GTK_BYTE)
 
 test_gtk: $(LIB_BYTE) gtk_byte test_gtk.ml
 	$(OCAMLFIND) ocamlc $(OF_FLAGS) -linkpkg -o test_gtk.x \
-	$(LIB_BYTE) $(LIB_GTK_BYTE) test_gtk.ml
+	$(LIB_BYTE) $(LIB_GTK_BYTE) -thread test_gtk.ml
 
 $(LIB): $(CMIFILES) $(CMXFILES)
 	$(OCAMLOPT) -a -o $@ $(CMXFILES)

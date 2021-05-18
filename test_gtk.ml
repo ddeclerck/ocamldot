@@ -40,7 +40,7 @@ let md5sum_of_string s =
 
 class box file =
   object (self)
-    inherit Odot_gtk.box ~dot_program: Odot_gtk.Fdp
+    inherit Odot_gtk.box ~dot_program: Odot_gtk.Dot
 	~tmp_hash: (Printf.sprintf "/tmp/%s" (md5sum_of_string file))
 	()
 
@@ -59,7 +59,7 @@ class box file =
 
     method on_button1_press ~x ~y = function
       None -> GToolbox.message_box "Click!"
-        (Printf.sprintf "You clicked %d/%d! No id at this position!" x y)
+        (Printf.sprintf "You clicked %f/%f! No id at this position!" x y)
     | Some s -> GToolbox.message_box "You clicked !" s
   end
 
