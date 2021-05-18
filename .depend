@@ -49,6 +49,8 @@ test.cmo : \
 test.cmx : \
     odot.cmx
 test_gtk.cmo : \
+    odot_gtk.cmi \
     odot.cmi
 test_gtk.cmx : \
+    odot_gtk.cmx \
     odot.cmx
