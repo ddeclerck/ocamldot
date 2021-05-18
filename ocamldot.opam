@@ -3,7 +3,7 @@ name: "ocamldot"
 version: "1.1"
 maintainer: "Zoggy <zoggy@bat8.org>"
 authors: ["Zoggy <zoggy@bat8.org>"]
-homepage: ["https://zoggy.frama.io/xmldiff/"]
+homepage: ["https://zoggy.frama.io/ocamldot/"]
 license: "LGPL-3.0-only"
 synopsis: "Parsing and printing graphviz files in OCaml"
 doc: ["https://zoggy.frama.io/ocamldot/refdoc/"]
