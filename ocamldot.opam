@@ -1,0 +1,28 @@
+opam-version: "2.0"
+name: "ocamldot"
+version: "1.1"
+maintainer: "Zoggy <zoggy@bat8.org>"
+authors: ["Zoggy <zoggy@bat8.org>"]
+homepage: ["https://zoggy.frama.io/xmldiff/"]
+license: "LGPL-3.0-only"
+synopsis: "Parsing and printing graphviz files in OCaml"
+doc: ["https://zoggy.frama.io/ocamldot/refdoc/"]
+bug-reports: "https://framagit.org/zoggy/ocamldot/-/issues"
+dev-repo: "git+https://framagit.org/zoggy/ocamldot.git"
+
+build: [
+  ["./configure" "--prefix" prefix]
+  [make "all"]
+]
+install: [make "install"]
+depends: [
+  "ocaml" {>= "4.12.0" }
+  "ocamlfind" {build}
+  "xmlm" {>= "1.3.0" }
+]
+depopts: [
+  "lablgtk3"
+]
+conflicts: [
+  "lablgtk3" {< "3.1.1"}
+]
