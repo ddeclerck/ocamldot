@@ -1,5 +1,5 @@
 opam-version: "2.0"
-name: "ocamldot"
+name: "dot"
 version: "1.2"
 maintainer: "Zoggy <zoggy@bat8.org>"
 authors: ["Zoggy <zoggy@bat8.org>"]
@@ -17,5 +17,4 @@ depends: [
   "ocaml" {>= "4.12.0" }
   "ocamlfind" {build}
   "dune"  { >= "2.2" }
-  "dot"   {version}
 ]

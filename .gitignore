@@ -13,7 +13,6 @@ odot_parser.output
 master.Makefile
 test.x
 test_gtk.x
-odot_version.ml
 config.log
 config.lineno
 config.status

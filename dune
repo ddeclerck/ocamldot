@@ -1,0 +1,15 @@
+
+(env
+ (dev (flags -w -27))
+ (release (flags -w -27 )))
+
+(ocamllex odot_lexer)
+(ocamlyacc (modules odot_parser))
+
+(library
+ (name odot)
+ (public_name dot)
+ (synopsis "OCamlDot")
+ (wrapped false)
+ (modules_without_implementation odot_types)
+ (modules odot_version odot_types odot_lexer odot_parser odot))
