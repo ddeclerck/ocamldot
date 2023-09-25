@@ -15,4 +15,5 @@
  (name dot)
  (depends
   (ocaml (>= 4.03))
-  (dune (>= 2.2))))
+  (dune (>= 2.2))
+   ocamldot))
